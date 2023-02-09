@@ -1,0 +1,852 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <title>
+    Yearly Reports
+  </title>
+  <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+  <!-- Nucleo Icons -->
+  <link href="assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="assets/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <link href="assets/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- CSS Files -->
+  <link id="pagestyle" href="assets/css/soft-ui-dashboard.min.css?v=1.0.3" rel="stylesheet" />
+
+  <!-- Leaflet Files -->
+  <link rel="stylesheet" href="assets/css/leaflet.css" />
+  <script src="assets/js/plugins/leaflet.js"></script>
+
+  <!-- Load Esri Leaflet from CDN -->
+  <script src="https://unpkg.com/esri-leaflet@2.1.4/dist/esri-leaflet.js" integrity="sha512-m+BZ3OSlzGdYLqUBZt3u6eA0sH+Txdmq7cqA1u8/B2aTXviGMMLOfrKyiIW7181jbzZAY0u+3jWoiL61iLcTKQ==" crossorigin=""></script>
+
+
+  <!-- Load Esri Leaflet Geocoder from CDN -->
+  <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.2.9/dist/esri-leaflet-geocoder.css" integrity="sha512-v5YmWLm8KqAAmg5808pETiccEohtt8rPVMGQ1jA6jqkWVydV5Cuz3nJ9fQ7ittSxvuqsvI9RSGfVoKPaAJZ/AQ==" crossorigin="">
+  <script src="https://unpkg.com/esri-leaflet-geocoder@2.2.9/dist/esri-leaflet-geocoder.js" integrity="sha512-QXchymy6PyEfYFQeOUuoz5pH5q9ng0eewZN8Sv0wvxq3ZhujTGF4eS/ySpnl6YfTQRWmA2Nn3Bezi9xuF8yNiw==" crossorigin=""></script>
+
+
+  <script src="assets/js/plugins/jquery.js"></script>
+
+  <link href="assets/css/sweetalert.css" rel="stylesheet" />
+  <style type="text/css">
+    #map { height: 30vh; }
+  </style>
+</head>
+
+<body class="g-sidenav-show  bg-gray-100">
+ <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 nav-left" id="sidenav-main">
+ </aside>
+
+ <main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg ">
+  <!-- Navbar -->
+  <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl nav-top" id="navbarBlur" navbar-scroll="true">
+  </nav>
+  <!-- End Navbar -->
+  <div class="container-fluid py-4">
+    <div class="row mt-4">
+      <div class="col-12">
+        <div class="card">
+
+          <div class="card-header pb-0">
+           <div class="row">
+            <div class="col-6 align-items-center">
+              <h6 class="mb-0">Yearly Reports</h6>
+              <p class="text-sm mb-0">Indonesia Coffee Forecast in year</p>
+            </div>
+            <div class="col-6 text-end">
+              <button type="button" class="btn bg-gradient-primary" data-bs-toggle="modal" data-bs-target="#formModal" data-mode="create">
+                Insert Record
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-flush" id="datatable-basic">
+            <thead class="thead-light">
+              <tr>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Year</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Production</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Growth</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Forecast</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">MAPE</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">RMSE</th>
+              </thead>
+              <tbody id="get-data">
+              </tbody>
+            </table>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mt-4">
+      <div class="card-header pb-0">
+        <h6>Forecast overview</h6>
+        <p class="text-sm" id="fr-overview">
+
+        </p>
+      </div>
+      <div class="card-body p-3">
+        <div class="chart">
+          <div class="chartjs-size-monitor">
+            <div class="chartjs-size-monitor-expand">
+              <div class=""></div>
+            </div>
+            <div class="chartjs-size-monitor-shrink">
+              <div class=""></div>
+            </div>
+          </div>
+          <div class="chartjs-size-monitor">
+            <div class="chartjs-size-monitor-expand">
+              <div class=""></div>
+            </div>
+            <div class="chartjs-size-monitor-shrink">
+              <div class=""></div>
+            </div>
+          </div>
+          <canvas id="chart-line" class="chart-canvas chartjs-render-monitor" height="600" width="1628" style="display: block; height: 300px; width: 814px; box-sizing: border-box;"></canvas>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="dataModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+
+          <div class="modal-body">
+
+
+            <div class="table-responsive">
+              <table class="table table-flush" id="datatable-forecast">
+                <thead class="thead-light">
+                  <tr>
+                    <th class="text-uppercase text-dark text-xs font-weight-bolder opacity-7">Province /<p class="text-xxs mb-0">Previous Production</p></th>
+                    <th class="text-uppercase text-dark text-xs font-weight-bolder opacity-7 text-start">Actual /<p class="text-xxs mb-0">Growth</p></th>
+                    <th class="text-uppercase text-dark text-xxs font-weight-bolder opacity-7">Forecast /<p class="text-xxs mb-0 text-secondary font-weight-bolder">Next Year</p></th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">MAPE</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">RMSE</th>
+                  </thead>
+                  <tbody id="get-province">
+
+                  </tbody>
+                </table>
+
+
+
+              </div>
+
+            </div>
+            <!--   <div class="modal-footer">
+                <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+                <button id="form-btn" type="submit" value="create" class="btn bg-gradient-primary">Save changes</button>
+              </div> -->
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <form id="form">
+                <div class="modal-header">
+                  <h6 class="modal-title" id="modalLabel">Insert Record</h6>
+                  <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+
+                  <div class="row mb-3">
+                    <div class="col">
+                      <label>Year</label>
+                      <select class="form-control" name="year" id="choices-year" placeholder="Year" required >
+
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <div class="col">
+                      <label>Province</label>
+                      <select class="form-control" name="province" id="choices-province" placeholder="Province" required >
+
+                      </select>
+                    </div>
+                  </div>
+
+
+
+                  <div class="row mb-3">
+                    <div class="col">
+                      <label>Production</label>
+                      <input class="multisteps-form__input form-control" name="production" type="number" required />
+                    </div>
+                  </div>
+
+
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+                  <button id="form-btn" type="submit" value="create" class="btn bg-gradient-primary">Insert Data</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <form id="formEdit">
+                <div class="modal-header">
+                  <h6 class="modal-title" id="editLabel">Edit Record</h6>
+                  <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+
+                  <input class="form-control" name="provinceid" type="hidden" required readonly />
+
+                  <div class="row mb-3">
+                    <div class="col">
+                      <label>Year</label>
+                      <input class="form-control" name="year" type="number" required readonly/>
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <div class="col">
+                      <label>Province</label>
+                      <input class="form-control" name="province" type="text" required readonly/>
+                    </div>
+                  </div>
+
+
+
+                  <div class="row mb-3">
+                    <div class="col">
+                      <label>Production</label>
+                      <input class="form-control" name="production" type="number" required />
+                    </div>
+                  </div>
+
+
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+                  <button id="form-btn" type="submit" value="create" class="btn bg-gradient-primary">Insert Data</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+        <footer class="footer pt-3  ">
+          <div class="container-fluid">
+            <div class="row align-items-center justify-content-lg-between">
+              <div class="col-lg-6 mb-lg-0 mb-4">
+                <div class="copyright text-center text-sm text-muted text-lg-start">
+                  © <script>
+                    document.write(new Date().getFullYear())
+                  </script>,
+                  made with <i class="fa fa-heart"></i> by
+                  <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Creative Tim</a>
+                  for a better web.
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+                  <li class="nav-item">
+                    <a href="https://www.creative-tim.com" class="nav-link text-muted" target="_blank">Creative Tim</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted" target="_blank">About Us</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="https://creative-tim.com/blog" class="nav-link text-muted" target="_blank">Blog</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted" target="_blank">License</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </main>
+
+    <!--   Core JS Files   -->
+
+    <script src="assets/js/core/popper.min.js"></script>
+    <script src="assets/js/core/bootstrap.min.js"></script>
+    <script src="assets/js/plugins/datatables.js"></script>
+    <script src="assets/js/plugins/perfect-scrollbar.min.js"></script>
+    <script src="assets/js/plugins/smooth-scrollbar.min.js"></script>
+    <script src="assets/js/plugins/chartjs.min.js"></script>
+    <script src="assets/js/plugins/sweetalert.js"></script>
+    <script src="assets/js/plugins/choices.min.js"></script>
+    <script type="text/javascript">
+
+      var currentYear = (new Date).getFullYear();
+
+      var fc_year ="";
+      var datafc = new simpleDatatables.DataTable("#datatable-forecast", {
+        searchable: true,
+        perPage : 5,
+        // perPageSelect: false,
+        labels: {
+          placeholder: "Search...",
+          perPage: "{select} province/page",
+          noRows: "No entries found",
+          info: "This <span class='text-primary font-weight-bolder'>"+fc_year+"</span> Forecast using linear regression method"
+        },
+      });
+      $('#dataModal').on('show.bs.modal', function(e) {
+        fc_year = $(e.relatedTarget).data('year');
+        // console.log(fc_year);
+
+        datafc.destroy();
+        datafc = new simpleDatatables.DataTable("#datatable-forecast", {
+          searchable: true,
+          perPage : 5,
+        // perPageSelect: false,
+        labels: {
+          placeholder: "Search...",
+          perPage: "{select} province/page",
+          noRows: "No entries found",
+          info: "This <span class='text-primary font-weight-bolder'>"+fc_year+"</span> Forecast using linear regression method"
+        },
+      });
+        $.ajax({
+          type: 'POST',
+          url: 'get_fcprovince.php',
+          data: {year: fc_year},
+          dataType: 'json',
+          cache: false,
+          beforeSend: function(){
+            datafc.destroy();
+          },
+          success: function(result){
+
+            var html = '';
+            $(result).each(function() {
+              if (this.gstat==null) {
+                var ginfo = "fa fa-square";
+                var txtcolor = "text-secondary";
+              }else if (this.gstat==1) {
+                var ginfo = "fa fa-arrow-up";
+                var txtcolor = "text-success";
+              }else if (this.gstat==0){
+                var ginfo = "fa fa-arrow-down";
+                var txtcolor = "text-danger";
+              }
+
+
+            // console.log(growth);
+            html = html + '<tr data-bs-toggle="modal" data-bs-target="#editModal" data-mode="edit" data-id="'+this.id+'" data-year="'+this.year+'" data-province="'+this.province+'" data-production="'+this.dproduction+'">';
+            html = html + '     <td class="text-sm font-weight-normal"><p class="text-sm mb-0 font-weight-bolder">'+this.province+'</p><p class="text-xs mb-0">Before : '+this.l_production+' <small class="text-xxs">Ton</small></p></td>';
+            html = html + '     <td class="text-sm text-end"><p class="text-sm mb-0 font-weight-bolder">'+this.production+' <small class="text-xxs">Ton</small></p><p class="text-xs font-weight-bolder mb-0 '+txtcolor+'"><i class="'+ginfo+" "+txtcolor+'" aria-hidden="true"></i> '+this.growth+'%</p></td>';
+            html = html + '     <td class="text-sm font-weight-normal text-end"><p class="text-sm mb-0 font-weight-bolder">'+this.forecast+'</p><p class="text-xs mb-0 font-weight-bolder text-info">'+this.forecast_next+'</p></td>';
+            
+            if (this.mape == 0) {
+              var badge = "badge-secondary";
+            }else if (this.mape < 10){
+              var badge = "badge-success";
+            }else if (this.mape >= 10){
+              var badge = "badge-warning";
+            }
+            html = html + '     <td class="text-sm ext-end"><span class="badge '+badge+'">'+this.mape+' %</span></td>';
+            html = html + '     <td class="text-sm text-end"><p class="text-xs mb-0 font-weight-bolder">'+this.rmse+'</p></td>';
+
+            html = html + '</tr>';
+          });
+            $('#get-province').append(html);
+
+
+
+            datafc.render();
+          }
+        });
+
+      });
+
+      const datatable = new simpleDatatables.DataTable("#datatable-basic", {
+        searchable: true,
+        fixedHeight: true,
+        labels: {
+          placeholder: "Search...",
+          perPage: "{select} entries per page",
+          noRows: "No entries found",
+          info: "This Forecast using linear regression method"
+        },
+      });
+
+      var label = [];
+      var d_actual = [];
+      var d_forecast = [];
+
+      var chart = new Chart($("#chart-line"), {
+        type: "line",
+        data: {
+          labels: label,
+          datasets: [{
+            label: "Actual",
+            tension: 0.4,
+            borderWidth: 0,
+            pointRadius: 3,
+            borderColor: "#cb0c9f",
+            borderWidth: 3,
+            data: d_actual,
+            maxBarThickness: 6
+          },
+          {
+            label: "Forecast",
+            tension: 0.4,
+            borderWidth: 0,
+            pointRadius: 3,
+            borderColor: "#3A416F",
+            borderWidth: 3,
+            data: d_forecast,
+            maxBarThickness: 6
+          },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: true,
+            }
+          },
+          interaction: {
+            intersect: false,
+            mode: 'index',
+          },
+          scales: {
+            y: {
+              grid: {
+                drawBorder: false,
+                display: true,
+                drawOnChartArea: true,
+                drawTicks: false,
+                borderDash: [5, 5]
+              },
+              ticks: {
+                display: true,
+                padding: 10,
+                color: '#b2b9bf',
+                font: {
+                  size: 11,
+                  family: "Open Sans",
+                  style: 'normal',
+                  lineHeight: 2
+                },
+              }
+            },
+            x: {
+              grid: {
+                drawBorder: false,
+                display: true,
+                drawOnChartArea: true,
+                drawTicks: true,
+                borderDash: [5, 5]
+              },
+              ticks: {
+                display: true,
+                color: '#b2b9bf',
+                padding: 10,
+                font: {
+                  size: 11,
+                  family: "Open Sans",
+                  style: 'normal',
+                  lineHeight: 2
+                },
+              }
+            },
+          },
+        },
+      });
+
+
+      $(document).ready(function() {
+        getData();
+      });
+
+      function getData(){
+        datatable.destroy();
+        chart.destroy();
+
+        $.get("get_forecast.php", function(data, status){
+
+          var response = $.parseJSON(data);
+          var html = '';
+          var html2 = '';
+          var prcurrent ='';
+          var frnext ='';
+          console.log(response);
+          $(response).each(function() {
+
+            if (this.gstat==null) {
+              var ginfo = "fa fa-square";
+              var txtcolor = "text-secondary";
+            }else if (this.gstat==1) {
+              var ginfo = "fa fa-arrow-up";
+              var txtcolor = "text-success";
+            }else if (this.gstat==0){
+              var ginfo = "fa fa-arrow-down";
+              var txtcolor = "text-danger";
+            }
+
+            if (this.growth != undefined) {
+              var growth = this.growth+" %";
+            }else{
+              var growth = "N/A";
+            }
+
+            if (this.data_year == (currentYear)) {
+              prcurrent = this.data_actual;
+            }
+
+            if (this.data_year == (currentYear+1)) {
+              frnext = this.data_forecast;
+            }
+
+
+
+            html = html + '<tr data-bs-target="#dataModal" data-bs-toggle="modal" data-mode="view" data-year="'+this.data_year+'">';
+            html = html + '<td class="text-sm font-weight-normal">'+this.data_year+'</td>';
+            html = html + '<td class="text-sm font-weight-bold">'+this.data_actual+' <small class="font-weight-normal">Ton</small></td>';
+            html = html + '<td class="text-sm font-weight-bold"><i class="'+ginfo+" "+txtcolor+'" aria-hidden="true"></i> '+growth+'</td>';
+            html = html + '<td class="text-sm font-weight-bold text-secondary">'+this.data_forecast+' <small>Ton</small></td>';
+
+            if (this.mape == 0) {
+              html = html + '<td class="text-sm font-weight-normal"><span class="badge badge-secondary badge-sm">n/a</span></td>';
+            }else if (this.mape < 10){
+              html = html + '<td class="text-sm font-weight-normal"><span class="badge badge-success">'+this.mape+' %</span></td>';
+            }else if (this.mape >= 10){
+              html = html + '<td class="text-sm font-weight-normal"><span class="badge badge-warning">'+this.mape+' %</span></td>';
+            }
+            html = html + '<td class="text-sm font-weight-normal">'+this.rmse+'</td>';
+            html = html + '</tr>';
+            label.push(this.data_year);
+            d_actual.push(this.data_actual);
+            d_forecast.push(this.data_forecast);
+          });
+          var froverview = ((frnext-prcurrent)/prcurrent)*100;
+          // console.log(froverview.toFixed(1));
+          if (frnext < prcurrent) {
+            $('#fr-overview').html('<i class="fa fa-arrow-down text-danger" aria-hidden="true"></i> <span class="font-weight-bold">'+froverview.toFixed(2)+'% less</span> in '+(currentYear+1));
+          }else if(frnext > prcurrent) {
+            $('#fr-overview').html('<i class="fa fa-arrow-up text-success" aria-hidden="true"></i> <span class="font-weight-bold">'+froverview.toFixed(2)+'% more</span> in '+(currentYear+1));
+          }
+          chart = new Chart($("#chart-line"), {
+            type: "line",
+            data: {
+              labels: label,
+              datasets: [{
+                label: "Actual",
+                tension: 0.4,
+                borderWidth: 0,
+                pointRadius: 3,
+                borderColor: "#cb0c9f",
+                borderWidth: 3,
+                data: d_actual,
+                maxBarThickness: 6
+              },
+              {
+                label: "Forecast",
+                tension: 0.4,
+                borderWidth: 0,
+                pointRadius: 3,
+                borderColor: "#3A416F",
+                borderWidth: 3,
+                data: d_forecast,
+                maxBarThickness: 6
+              },
+              ],
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: {
+                  display: true,
+                }
+              },
+              interaction: {
+                intersect: false,
+                mode: 'index',
+              },
+              scales: {
+                y: {
+                  grid: {
+                    drawBorder: false,
+                    display: true,
+                    drawOnChartArea: true,
+                    drawTicks: false,
+                    borderDash: [5, 5]
+                  },
+                  ticks: {
+                    display: true,
+                    padding: 10,
+                    color: '#b2b9bf',
+                    font: {
+                      size: 11,
+                      family: "Open Sans",
+                      style: 'normal',
+                      lineHeight: 2
+                    },
+                  }
+                },
+                x: {
+                  grid: {
+                    drawBorder: false,
+                    display: true,
+                    drawOnChartArea: true,
+                    drawTicks: true,
+                    borderDash: [5, 5]
+                  },
+                  ticks: {
+                    display: true,
+                    color: '#b2b9bf',
+                    padding: 10,
+                    font: {
+                      size: 11,
+                      family: "Open Sans",
+                      style: 'normal',
+                      lineHeight: 2
+                    },
+                  }
+                },
+              },
+            },
+          });
+          $('#get-data').append(html);
+          chart.update();
+          datatable.render();
+          chart.render();
+        });
+};
+
+
+
+$.get("get_fcyear.php", function(data, status){
+  var response = $.parseJSON(data);
+      // console.log(response);
+      var html = '';
+      $(response).each(function() {
+        console.log(this.year); 
+        if (this.year == currentYear) {
+          html = html + '<option value="'+this.year+'" selected="">'+this.year+' - Total Coffee Production '+this.production+' Ton</option>';
+
+        }else{
+         html = html + '<option value="'+this.year+'">'+this.year+' - Total Coffee Production '+this.production+' Ton</option>';
+       }
+
+
+
+     });
+      var endyear = $(response).get(-1).year;
+      // console.log($(response).get(-1).year);
+      for (var i = 1; i <= 5; i++) {
+        html = html + '<option value="'+(Number(endyear)+i)+'">'+(Number(endyear)+i)+' - No Data</option>';
+        // console.log(html);
+      }
+      $('#choices-year').append(html);
+      if (document.getElementById('choices-year')) {
+
+        var element = document.getElementById('choices-year');
+        const example = new Choices(element, {
+          searchEnabled: true,
+          searchChoices: true,
+          renderChoiceLimit: 5,
+          searchPlaceholderValue: "Click here to search...",
+        });
+        getSelProvince();
+      }
+
+    });
+
+
+
+
+var element = document.getElementById('choices-province');
+const example = new Choices(element, {
+  searchEnabled: true,
+  searchChoices: true,
+  renderChoiceLimit: 5,
+  searchPlaceholderValue: "Click here to search...",
+});
+
+
+
+
+$('#choices-year').change(function(){
+
+  example.clearChoices();
+  getSelProvince();
+
+})
+
+
+function getSelProvince(){
+ var selyear = $('#choices-year').val();
+
+ $.ajax({
+  type: 'POST',
+  url: 'get_province.php',
+  data: {year: selyear},
+  dataType: 'json',
+  cache: false,
+  beforeSend: function(){
+  },
+  success: function(result){ /* GET THE TO BE RETURNED DATA */
+    console.log(result);
+      // var selected = result[0].id;
+      var html = [];
+      if (result === null) {
+        example.removeActiveItems();
+        // html.push({value: 1, label: 'no data'});
+      }
+      // console.log(result[0].id);
+      $(result).each(function() {
+        if (this.id === result[0].id){
+         html.push({value: this.id, label: this.province, selected: true});
+       }else{
+        html.push({value: this.id, label: this.province});
+      }
+    });
+         // console.log(html);
+        // $('#choices-province').append(html);
+        example.setChoices(html,
+          'value',
+          'label',
+          false,
+          );
+
+      }
+    });
+
+}
+</script>
+<script type="text/javascript">
+ $("#form").on('submit', function(e){
+  label = [];
+  d_actual = [];
+  d_forecast = [];
+  e.preventDefault();
+  $.ajax({
+    type: 'POST',
+    url: 'insert_data.php',
+    data: new FormData(this),
+    dataType: 'json',
+    contentType: false,
+    cache: false,
+    processData:false,
+    beforeSend: function(){
+      $('#get-data').empty();
+    },
+    success: function(result){ /* GET THE TO BE RETURNED DATA */
+      console.log(result);
+
+      getData();
+      $('#formModal').modal('toggle');
+      $("input[type=text]").val("");
+      example.clearChoices();
+      example.removeActiveItems();
+      swal({
+        title: (result['title']),
+        type: (result['type']),
+        text: (result['text']),
+      });
+    }
+  });
+});
+
+ $("#formEdit").on('submit', function(e){
+    // chart.destroy();
+    label = [];
+    d_actual = [];
+    d_forecast = [];
+    e.preventDefault();
+
+    $.ajax({
+      type: 'POST',
+      url: 'edit_data.php',
+      data: new FormData(this),
+      dataType: 'json',
+      contentType: false,
+      cache: false,
+      processData:false,
+      beforeSend: function(){
+        $('#get-data').empty();
+      },
+      success: function(result){ /* GET THE TO BE RETURNED DATA */
+        console.log(result);
+        
+        getData();
+        $('#editModal').modal('toggle');
+        $("input[type=text]").val("");
+        swal({
+          title: (result['title']),
+          type: (result['type']),
+          text: (result['text']),
+        });
+      }
+    });
+  });
+</script>
+<script type="text/javascript">
+  $('#formModal').on('show.bs.modal', function(e) {
+    getSelProvince();
+ });
+
+</script>
+
+<script type="text/javascript">
+ $('#editModal').on('show.bs.modal', function(e) {
+  $('#dataModal').modal('toggle');
+  var id = $(e.relatedTarget).data('id');
+  var year = $(e.relatedTarget).data('year');
+  var province = $(e.relatedTarget).data('province');
+  var production = $(e.relatedTarget).data('production');
+  // $(e.currentTarget).find('input[name="id_pbi"]').val(id).prop('readonly', true);
+  $(e.currentTarget).find('input[name="provinceid"]').val(id);
+  $(e.currentTarget).find('input[name="year"]').val(year);
+  $(e.currentTarget).find('input[name="province"]').val(province);
+  $(e.currentTarget).find('input[name="production"]').val(production);
+});
+
+</script>
+
+<script src="assets/js/nav-control.js"></script>
+
+</body>
+
+</html>

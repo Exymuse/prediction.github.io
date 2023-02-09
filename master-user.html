@@ -1,0 +1,442 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <title>
+    Master User
+  </title>
+  <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+  <!-- Nucleo Icons -->
+  <link href="assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="assets/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <link href="assets/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- CSS Files -->
+  <link id="pagestyle" href="assets/css/soft-ui-dashboard.min.css?v=1.0.3" rel="stylesheet" />
+
+  <link href="assets/css/sweetalert.css" rel="stylesheet" />
+</head>
+
+<body class="g-sidenav-show  bg-gray-100">
+ <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 nav-left" id="sidenav-main">
+ </aside>
+
+ <main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg ">
+  <!-- Navbar -->
+  <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl nav-top" id="navbarBlur" navbar-scroll="true">
+  </nav>
+  <!-- End Navbar -->
+  <div class="container-fluid py-4">
+    <div class="row mt-4">
+      <div class="col-12">
+        <div class="card">
+
+          <div class="card-header">
+           <div class="row">
+            <div class="col-6 align-items-center">
+              <h6 class="mb-0">Master User</h6>
+              <p class="text-sm mb-0">List of registered user</p>
+            </div>
+            <div class="col-6 text-end">
+              <button type="button" class="btn bg-gradient-primary" data-bs-toggle="modal" data-bs-target="#createModal">
+                Add New User
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-flush" id="datatable-basic">
+            <thead class="thead-light">
+              <tr>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Email</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Username</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Create Date</th>
+                <!-- <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Option</th> -->
+              </thead>
+              <tbody id="get-user">
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <form id="create-user">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Add New User</h5>
+              <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+
+              <div class="row mt-3">
+                <div class="col">
+                  <label>Email</label>
+                  <input class="multisteps-form__input form-control" type="email" name="email" placeholder="eg. alan@gmail.com" required>
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col">
+                  <label>Username</label>
+                  <input class="multisteps-form__input form-control" type="text" name="username" placeholder="eg. alan" required>
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col">
+                  <label>Password</label>
+                  <input class="multisteps-form__input form-control" type="password" name="password" placeholder="password" required>
+                </div>
+              </div>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+              <button id="create-btn" type="submit" value="create" class="btn bg-gradient-primary">Save changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <form id="edit-user">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
+              <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="row mt-3">
+                <div class="col">
+                  <label>ID</label>
+                  <input class="multisteps-form__input form-control" type="text" name="id"  readonly>
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col">
+                  <label>Email</label>
+                  <input class="multisteps-form__input form-control" type="email" name="email" placeholder="eg. alan@gmail.com" required>
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col">
+                  <label>Username</label>
+                  <input class="multisteps-form__input form-control" type="text" name="username" placeholder="eg. alan" required>
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col">
+                  <label>Password</label>
+                  <input class="multisteps-form__input form-control" type="password" name="password" placeholder="password" required>
+                </div>
+              </div>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+              <button id="edit-btn" type="submit" value="create" class="btn bg-gradient-primary">Save changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <form id="delete-user">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
+              <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="row mt-3">
+                <div class="col">
+                  <label>ID</label>
+                  <input class="multisteps-form__input form-control" type="text" name="id"  readonly>
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col">
+                  <label>Email</label>
+                  <input class="multisteps-form__input form-control" type="email" name="email" placeholder="eg. alan@gmail.com"  readonly>
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col">
+                  <label>Username</label>
+                  <input class="multisteps-form__input form-control" type="text" name="username" placeholder="eg. alan" readonly>
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col">
+                  <label>Password</label>
+                  <input class="multisteps-form__input form-control" type="password" name="password" placeholder="password" readonly>
+                </div>
+              </div>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+              <button id="delete-btn" type="submit" value="create" class="btn bg-gradient-primary">Delete</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+
+
+
+    <footer class="footer pt-3  ">
+      <div class="container-fluid">
+        <div class="row align-items-center justify-content-lg-between">
+          <div class="col-lg-6 mb-lg-0 mb-4">
+            <div class="copyright text-center text-sm text-muted text-lg-start">
+              © <script>
+                document.write(new Date().getFullYear())
+              </script>,
+              made with <i class="fa fa-heart"></i> by
+              <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Creative Tim</a>
+              for a better web.
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+              <li class="nav-item">
+                <a href="https://www.creative-tim.com" class="nav-link text-muted" target="_blank">Creative Tim</a>
+              </li>
+              <li class="nav-item">
+                <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted" target="_blank">About Us</a>
+              </li>
+              <li class="nav-item">
+                <a href="https://creative-tim.com/blog" class="nav-link text-muted" target="_blank">Blog</a>
+              </li>
+              <li class="nav-item">
+                <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted" target="_blank">License</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+</main>
+
+<!--   Core JS Files   -->
+<script src="assets/js/plugins/jquery.js"></script>
+<script src="assets/js/core/popper.min.js"></script>
+<script src="assets/js/core/bootstrap.min.js"></script>
+<script src="assets/js/plugins/datatables.js"></script>
+<script src="assets/js/plugins/perfect-scrollbar.min.js"></script>
+<script src="assets/js/plugins/smooth-scrollbar.min.js"></script>
+<script src="assets/js/plugins/chartjs.min.js"></script>
+<script src="assets/js/plugins/sweetalert.js"></script>
+<script src="assets/js/nav-control.js"></script>
+<script type="text/javascript">
+
+  const datatable = new simpleDatatables.DataTable("#datatable-basic", {
+    searchable: false,
+    searchable: true,
+    fixedHeight: true
+  });
+
+</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    getUser();
+  });
+</script>
+<script type="text/javascript">
+
+  function getUser(){
+   datatable.destroy();
+   $.get("get_user.php", function(data, status){
+    var response = $.parseJSON(data);
+            // console.log(response[0]);
+            var html = '';
+            $(response).each(function() {
+
+              html = html + '<tr data-bs-target="#deleteModal" data-bs-toggle="modal" data-id="'+this.id+'" data-email="'+this.email+'" data-username="'+this.username+'" data-password="'+this.password+'">';
+              html = html + '     <td class="text-sm font-weight-normal">'+this.email+'</td>';
+              html = html + '     <td class="text-sm font-weight-normal">'+this.username+'</td>';
+              html = html + '     <td class="text-sm font-weight-normal">'+this.create_date+'</td>';
+              html = html + '     <td class="text-sm font-weight-normal"><button type="button" class="btn btn-sm bg-gradient-primary" data-bs-toggle="modal" data-bs-target="#editModal" data-id="'+this.id+'" data-email="'+this.email+'" data-username="'+this.username+'" data-password="'+this.password+'">Edit</button> </td>';
+              html = html + '</tr>';
+            });
+
+            $('#get-user').append(html);
+            datatable.render();
+
+          });
+
+ }
+
+</script>
+
+<script>
+  $("#create-user").on('submit', function(e){
+    e.preventDefault();
+    $.ajax({
+      type: 'POST',
+      url: 'create_user.php',
+      data: new FormData(this),
+      dataType: 'json',
+      contentType: false,
+      cache: false,
+      processData:false,
+      beforeSend: function(){
+        $('#get-user').empty();
+      },
+      success: function(result){ /* GET THE TO BE RETURNED DATA */
+        console.log(result['text']);
+        getUser();
+        $('#createModal').modal('toggle');
+        $("input[type=text],input[type=email],input[type=password]").val("");
+
+        swal({
+          title: (result['title']),
+          type: (result['type']),
+          text: (result['text']),
+        });
+      // setTimeout(function () {
+      //   if (result.status === 200) {
+      //     console.log(result);
+      //     $.alert(result.text,
+      //       function(a){$("#addCourseForm").trigger('reset');});
+      //   }else{
+      //     alert(result.text);
+      //   }
+      // }, 1000);
+    }
+  });
+  });
+
+</script>
+
+<script>
+  $("#edit-user").on('submit', function(e){
+    e.preventDefault();
+    $.ajax({
+      type: 'POST',
+      url: 'edit_user.php',
+      data: new FormData(this),
+      dataType: 'json',
+      contentType: false,
+      cache: false,
+      processData:false,
+      beforeSend: function(){
+        $('#get-user').empty();
+      },
+      success: function(result){ /* GET THE TO BE RETURNED DATA */
+        console.log(result['text']);
+        getUser();
+        $('#editModal').modal('toggle');
+        $("input[type=text],input[type=email],input[type=password]").val("");
+
+        swal({
+          title: (result['title']),
+          type: (result['type']),
+          text: (result['text']),
+        });
+        
+      }
+    });
+  });
+
+</script>
+
+
+
+<script>
+  $("#delete-user").on('submit', function(e){
+    e.preventDefault();
+    $.ajax({
+      type: 'POST',
+      url: 'delete_user.php',
+      data: new FormData(this),
+      dataType: 'json',
+      contentType: false,
+      cache: false,
+      processData:false,
+      beforeSend: function(){
+        $('#get-user').empty();
+      },
+      success: function(result){ /* GET THE TO BE RETURNED DATA */
+        console.log(result['text']);
+        getUser();
+        $('#deleteModal').modal('toggle');
+        $("input[type=text],input[type=email],input[type=password]").val("");
+
+        swal({
+          title: (result['title']),
+          type: (result['type']),
+          text: (result['text']),
+        });
+        
+      }
+    });
+  });
+
+</script>
+
+
+<script type="text/javascript">
+ $('#editModal').on('show.bs.modal', function(e) {
+  var id = $(e.relatedTarget).data('id');
+  var email = $(e.relatedTarget).data('email');
+  var username = $(e.relatedTarget).data('username');
+  var password = $(e.relatedTarget).data('password');
+  // $(e.currentTarget).find('input[name="id_pbi"]').val(id).prop('readonly', true);
+
+  $(e.currentTarget).find('input[name="id"]').val(id);
+  $(e.currentTarget).find('input[name="email"]').val(email);
+  $(e.currentTarget).find('input[name="username"]').val(username);
+  $(e.currentTarget).find('input[name="password"]').val(password);
+});
+</script>
+
+<script type="text/javascript">
+ $('#deleteModal').on('show.bs.modal', function(e) {
+  var id = $(e.relatedTarget).data('id');
+  var email = $(e.relatedTarget).data('email');
+  var username = $(e.relatedTarget).data('username');
+  var password = $(e.relatedTarget).data('password');
+  // $(e.currentTarget).find('input[name="id_pbi"]').val(id).prop('readonly', true);
+
+  $(e.currentTarget).find('input[name="id"]').val(id);
+  $(e.currentTarget).find('input[name="email"]').val(email);
+  $(e.currentTarget).find('input[name="username"]').val(username);
+  $(e.currentTarget).find('input[name="password"]').val(password);
+});
+</script>
+<script>
+  var win = navigator.platform.indexOf('Win') > -1;
+  if (win && document.querySelector('#sidenav-scrollbar')) {
+    var options = {
+      damping: '0.5'
+    }
+    Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+  }
+</script>
+
+</body>
+
+</html>

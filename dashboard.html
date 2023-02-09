@@ -1,0 +1,448 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <title>
+    Dashboard
+  </title>
+  <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+  <!-- Nucleo Icons -->
+  <link href="assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="assets/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <link href="assets/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- CSS Files -->
+  <link id="pagestyle" href="assets/css/soft-ui-dashboard.css?v=1.0.3" rel="stylesheet" />
+
+  
+  
+  <script src="assets/js/plugins/jquery.js"></script>
+  <script src="assets/js/nav-control.js"></script>
+</head>
+
+<body class="g-sidenav-show  bg-gray-100">
+ <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 nav-left" id="sidenav-main">
+ </aside>
+
+ <main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg ">
+  <!-- Navbar -->
+  <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl nav-top" id="navbarBlur" navbar-scroll="true">
+  </nav>
+  <!-- End Navbar -->
+  <div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+        <div class="card">
+          <div class="card-body p-3">
+            <div class="row">
+              <div class="col-8">
+                <div class="numbers">
+                  <p class="text-sm mb-0 text-capitalize font-weight-bold">Avg. Production</p>
+                  <h6 class="font-weight-bolder mb-0" id="thisAvgpr">
+                    0
+                  </h6>
+                </div>
+              </div>
+              <div class="col-4 text-end">
+                <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                  <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+        <div class="card">
+          <div class="card-body p-3">
+            <div class="row">
+              <div class="col-8">
+                <div class="numbers">
+                  <p class="text-sm mb-0 text-capitalize font-weight-bold">This Year Total</p>
+                  <h6 class="font-weight-bolder mb-0" id="thisPr">
+                    0
+                  </h6>
+                </div>
+              </div>
+              <div class="col-4 text-end">
+                <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                  <i class="ni ni-world text-lg opacity-10" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+        <div class="card">
+          <div class="card-body p-3">
+            <div class="row">
+              <div class="col-8">
+                <div class="numbers">
+                  <p class="text-sm mb-0 text-capitalize font-weight-bold">This Year Forecast</p>
+                  <h6 class="font-weight-bolder mb-0" id="thisFr">
+                    0
+                  </h6>
+                </div>
+              </div>
+              <div class="col-4 text-end">
+                <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                  <i class="ni ni-paper-diploma text-lg opacity-10" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-sm-6">
+        <div class="card">
+          <div class="card-body p-3">
+            <div class="row">
+              <div class="col-8">
+                <div class="numbers">
+                  <p class="text-sm mb-0 text-capitalize font-weight-bold">Next Year Forecast</p>
+                  <h6 class="font-weight-bolder mb-0" id="nextFr">
+                    0
+                  </h6>
+                </div>
+              </div>
+              <div class="col-4 text-end">
+                <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                  <i class="ni ni-cart text-lg opacity-10" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-lg-5 mb-lg-0 mb-4">
+        <div class="card h-100 mt-md-0">
+          <div class="card-header pb-0 p-3">
+            <div class="d-flex align-items-center">
+              <h6>Top Coffee Production</h6>
+              <button type="button" class="btn btn-icon-only btn-rounded btn-outline-success mb-0 ms-2 btn-sm d-flex align-items-center justify-content-center ms-auto" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                <i class="fas fa-check" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+          <div class="card-body px-3 pt-0 pb-2">
+            <div class="table-responsive p-0">
+              <table class="table align-items-center justify-content-center mb-0">
+                <thead>
+                  <tr>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Province</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Production</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Avg.Production</th>
+                  </tr>
+                </thead>
+                <tbody id="top-list">
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-7">
+        <div class="card z-index-2">
+          <div class="card-header pb-0 p-3">
+            <h6>Forecast overview</h6>
+            <p class="text-sm" id="fr-overview">
+
+            </p>
+          </div>
+          <div class="card-body p-3">
+            <div class="chart">
+              <canvas id="chart-line" class="chart-canvas" height="300"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="footer pt-3  ">
+      <div class="container-fluid">
+        <div class="row align-items-center justify-content-lg-between">
+          <div class="col-lg-6 mb-lg-0 mb-4">
+            <div class="copyright text-center text-sm text-muted text-lg-start">
+              © <script>
+                document.write(new Date().getFullYear())
+              </script>,
+              made with <i class="fa fa-heart"></i> by
+              <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Creative Tim</a>
+              for a better web.
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+              <li class="nav-item">
+                <a href="https://www.creative-tim.com" class="nav-link text-muted" target="_blank">Creative Tim</a>
+              </li>
+              <li class="nav-item">
+                <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted" target="_blank">About Us</a>
+              </li>
+              <li class="nav-item">
+                <a href="https://creative-tim.com/blog" class="nav-link text-muted" target="_blank">Blog</a>
+              </li>
+              <li class="nav-item">
+                <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted" target="_blank">License</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+</main>
+
+<!--   Core JS Files   -->
+<script src="assets/js/core/popper.min.js"></script>
+<script src="assets/js/core/bootstrap.min.js"></script>
+<script src="assets/js/plugins/perfect-scrollbar.min.js"></script>
+<script src="assets/js/plugins/smooth-scrollbar.min.js"></script>
+<script src="assets/js/plugins/chartjs.min.js"></script>
+
+<script type="text/javascript">
+
+  var currentYear = (new Date).getFullYear();
+  var label = [];
+  var d_actual = [];
+  var dtotal_now = [];
+  var dtotal_before = [];
+  var d_forecast = [];
+
+
+  $.get("get_forecast.php", function(data, status){
+
+    var response = $.parseJSON(data);
+    var prcurrent = 0;
+    var frlast = 0;
+    var frcurrent = 0;
+    var frnext = 0;
+    var totalNow = 0;
+    var totalBefore = 0;
+    console.log(response);
+    $(response).each(function() {
+
+      if (this.data_actual != null) {
+        dtotal_now.push(this.data_actual);
+      }
+      if (this.data_actual != null && this.data_year < (currentYear)) {
+        dtotal_before.push(this.data_actual);
+      }
+
+
+      if (this.data_year == (currentYear)) {
+        prcurrent = this.data_actual;
+        frcurrent = this.data_forecast;
+      }
+      if (this.data_year == (currentYear-1)) {
+        prlast = this.data_actual;
+        frlast = this.data_forecast;
+      }
+
+      if (this.data_year == (currentYear+1)) {
+        frnext = this.data_forecast;
+      }
+
+      if (this.data_year >= (currentYear-5) && this.data_year <= (currentYear+1)) {
+        label.push(this.data_year);
+        d_actual.push(this.data_actual);
+        d_forecast.push(this.data_forecast);
+      }
+
+
+
+
+    });
+
+
+    // avg production
+    $(dtotal_now).each(function(){
+      totalNow += Number(this);
+    });
+    $(dtotal_before).each(function(){
+      totalBefore += Number(this);
+    });
+    
+    var avgnow = (totalNow/dtotal_now.length).toFixed(0);
+    var avgbefore = (totalBefore/dtotal_before.length).toFixed(0);
+    var growthavg = ((avgnow-avgbefore)/avgbefore)*100;
+
+    if (growthavg > 0) {
+      $('#thisAvgpr').html(avgnow.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+' <span class="text-success text-xs font-weight-bolder">+'+growthavg.toFixed(2)+'%</span>');
+    }else if (growthavg < 0) {
+      $('#thisAvgpr').html(avgnow.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+' <span class="text-danger text-xs font-weight-bolder">-'+growthavg.toFixed(2)+'%</span>');
+    }
+    // end avg production
+
+    var growthtotal = ((prcurrent-prlast)/prlast)*100;
+    if (growthtotal > 0) {
+      $('#thisPr').html(prcurrent.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+' <span class="text-success text-xs font-weight-bolder">+'+growthtotal.toFixed(2)+'%</span>');
+    }else if (growthtotal < 0) {
+      $('#thisPr').html(prcurrent.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+' <span class="text-danger text-xs font-weight-bolder">-'+growthtotal.toFixed(2)+'%</span>');
+    }
+
+
+    var frgrowth = ((frcurrent-frlast)/frlast)*100;
+    if (frgrowth > 0) {
+      $('#thisFr').html(frcurrent.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+' <span class="text-success text-xs font-weight-bolder">+'+frgrowth.toFixed(2)+'%</span>');
+    }else if (frgrowth < 0) {
+      $('#thisFr').html(frcurrent.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+' <span class="text-danger text-xs font-weight-bolder">-'+frgrowth.toFixed(2)+'%</span>');
+    }
+
+    // forecast overview
+    var froverview = ((frnext-prcurrent)/prcurrent)*100;
+    if (frnext < prcurrent) {
+      $('#fr-overview').html('<i class="fa fa-arrow-down text-danger" aria-hidden="true"></i> <span class="font-weight-bold">'+froverview.toFixed(2)+'% less</span> in '+(currentYear+1));
+
+      $('#nextFr').html(frnext.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+' <span class="text-danger text-xs font-weight-bolder">-'+froverview.toFixed(2)+'%</span>');
+    }else if(frnext > prcurrent) {
+      $('#fr-overview').html('<i class="fa fa-arrow-up text-success" aria-hidden="true"></i> <span class="font-weight-bold">'+froverview.toFixed(2)+'% more</span> in '+(currentYear+1));
+
+      $('#nextFr').html(frnext.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+' <span class="text-success text-xs font-weight-bolder">+'+froverview.toFixed(2)+'%</span>');
+    }
+    // end forecast overview
+
+
+    chart = new Chart($("#chart-line"), {
+      type: "line",
+      data: {
+        labels: label,
+        datasets: [{
+          label: "Actual",
+          tension: 0.4,
+          borderWidth: 0,
+          pointRadius: 3,
+          borderColor: "#cb0c9f",
+          borderWidth: 3,
+          data: d_actual,
+          maxBarThickness: 6
+        },
+        {
+          label: "Forecast",
+          tension: 0.4,
+          borderWidth: 0,
+          pointRadius: 3,
+          borderColor: "#3A416F",
+          borderWidth: 3,
+          data: d_forecast,
+          maxBarThickness: 6
+        },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: true,
+          }
+        },
+        interaction: {
+          intersect: false,
+          mode: 'index',
+        },
+        scales: {
+          y: {
+            grid: {
+              drawBorder: false,
+              display: true,
+              drawOnChartArea: true,
+              drawTicks: false,
+              borderDash: [5, 5]
+            },
+            ticks: {
+              display: true,
+              padding: 10,
+              color: '#b2b9bf',
+              font: {
+                size: 11,
+                family: "Open Sans",
+                style: 'normal',
+                lineHeight: 2
+              },
+            }
+          },
+          x: {
+            grid: {
+              drawBorder: false,
+              display: true,
+              drawOnChartArea: true,
+              drawTicks: true,
+              borderDash: [5, 5]
+            },
+            ticks: {
+              display: true,
+              color: '#b2b9bf',
+              padding: 10,
+              font: {
+                size: 11,
+                family: "Open Sans",
+                style: 'normal',
+                lineHeight: 2
+              },
+            }
+          },
+        },
+      },
+    });
+    chart.update();
+    chart.render();
+  });
+</script>
+
+<script type="text/javascript">
+  var html = '';
+
+  $.ajax({
+    type: 'POST',
+    url: 'get_topprovince.php',
+    data: {year: currentYear},
+    dataType: 'json',
+    cache: false,
+    beforeSend: function(){
+    },
+    success: function(result){ /* GET THE TO BE RETURNED DATA */
+      console.log(result);
+
+      $(result).each(function() {
+
+        var totpvgrowth = ((this.production - this.productionbf)/this.productionbf)*100;
+        var totavgrowth = ((this.avg - this.avgbf)/this.avgbf)*100;
+
+        if (totpvgrowth > 0) {
+          var pvtext = '<p class="text-success text-xxs font-weight-bolder mb-0">+'+totpvgrowth.toFixed(2)+'%</p>';
+        }else if(totpvgrowth < 0) {
+          var pvtext = '<p class="text-danger text-xxs font-weight-bolder mb-0">-'+totpvgrowth.toFixed(2)+'%</p>';
+        }
+
+        if (totavgrowth > 0) {
+          var avtext = '<p class="text-success text-xxs font-weight-bolder mb-0">+'+totavgrowth.toFixed(2)+'%</p>';
+        }else if(totavgrowth < 0) {
+          var avtext = '<p class="text-danger text-xxs font-weight-bolder mb-0">-'+totavgrowth.toFixed(2)+'%</p>';
+        }
+        html = html +'<tr>';
+        html = html +' <td><p class="text-sm font-weight-bold mb-0">'+this.name+'</p></td>';
+        html = html +' <td><p class="text-sm font-weight-bold mb-0">'+this.production.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+'</p>'+pvtext+'</td>';
+        html = html +' <td><p class="text-sm font-weight-bold mb-0">'+this.avg.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+'</p>'+avtext+'</td>';
+        html = html +'</tr>';
+
+      });
+
+      $('#top-list').append(html);
+    }
+  });
+</script>
+
+</body>
+
+</html>
